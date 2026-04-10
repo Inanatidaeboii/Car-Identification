@@ -2,9 +2,11 @@ import os
 from dotenv import load_dotenv
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
-from models import Base 
+from database.models import Base 
 
 load_dotenv()
+
+print(f"DEBUG: Connecting as {os.getenv('POSTGRES_USER')} with pass {os.getenv('POSTGRES_PASSWORD')}")
 
 POSTGRES_USER = os.getenv("POSTGRES_USER", "postgres")
 POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD", "password")

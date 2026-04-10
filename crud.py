@@ -1,17 +1,11 @@
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
-
+from database import get_db
+from database.models import RegisteredCar
 app = FastAPI()
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
-@app.post("/cars/, response_model=CarResponse")
-def create_car(car: CarCreate, db: Session = Depends(get_db)):
+@app.post("/cars/", response_model=RegisteredCar)
+def create_car(car: RegisteredCar, db: Session = Depends(get_db)):
     db_car = db.query(RegisteredCar).filter(
         RegisteredCar.car_id == car.car_id,
         RegisteredCar.is_active == True
@@ -25,7 +19,7 @@ def create_car(car: CarCreate, db: Session = Depends(get_db)):
     db.refresh(new_car)
     return new_car
 
-@app.get("/cars/{car_id}", response_model=CarResponse):
+@app.get("/cars/{car_id}", response_model=RegisteredCar)
 def read_car(car_id: int, db: Session = Depends(get_db)):
     db_car = db.query(RegisteredCar).filter(
         RegisteredCar.car_id == car_id,
@@ -36,8 +30,8 @@ def read_car(car_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="car not found")
     return db_car
 
-@app.put("/cars/{car_id}", response_model=CarResponse):
-def update_car(car_id: int, car: CarUpdate, db: Session = Depends(get_db)):
+@app.put("/cars/{car_id}", response_model=RegisteredCar)
+def update_car(car_id: int, car: RegisteredCar, db: Session = Depends(get_db)):
     db_car = db.query(RegisteredCar).filter(
         RegisteredCar.car_id == car_id,
         RegisteredCar.is_active == True
