@@ -3,3 +3,5 @@ psycopg2-binary
 pgvector
 uuid
 python-dotenv
+uvicorn
+fastapi

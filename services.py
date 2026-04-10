@@ -9,7 +9,7 @@ import random
 ## Register a new car
 def create_car(car: schemas.RegisteredCarCreate, db: Session):
     db_car = db.query(models.RegisteredCar).filter(
-        models.RegisteredCar.car_id == car.car_id,
+        models.RegisteredCar.plate == car.plate,
         # models.RegisteredCar.is_active == True
     ).first()
 
@@ -35,10 +35,11 @@ def add_car_image(car_id: UUID, images: List[schemas.CarImageCreate], db: Sessio
     created_images = []
 
     for image in images:
+        print(image)
         mock_vector = [random.uniform(-1.0, 1.0) for _ in range(512)]
         new_image = models.CarImage(
-            image_url=image.image_path,
-            vector=mock_vector,
+            image_path=image.image_path,
+            embedding_vector=mock_vector,
             car_id=car_id)
         db.add(new_image)
         created_images.append(new_image)

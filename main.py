@@ -22,10 +22,10 @@ async def create_car(
     return car_db
 
 ## create a new image for a car
-@app.post("/cars/{car_id}/images/", response_model=schemas.CarImageResponse)
+@app.post("/cars/{car_id}/images/", response_model=List[schemas.CarImageResponse])
 async def add_car_image(
     car_id: UUID,
-    image: schemas.CarImageCreate,
+    image: List[schemas.CarImageCreate],
     db: services.Session = Depends(get_db)):
 
     image_db = services.add_car_image(car_id, image, db)
