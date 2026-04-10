@@ -54,7 +54,7 @@ class CarImage(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     image_path: Mapped[str] = mapped_column(Text, nullable=False)
     
-    EMBEDDING_DIMENSION = 512 
+    EMBEDDING_DIMENSION = 768 
     embedding_vector = mapped_column(Vector(EMBEDDING_DIMENSION), nullable=False)
 
     car_id: Mapped[uuid.UUID] = mapped_column(
@@ -68,7 +68,7 @@ class Logs(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     location: Mapped[str] = mapped_column(Text, nullable=False, index=True) 
     timestamp: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), default=datetime.utcnow, nullable=False, index=True
+        DateTime(timezone=True), default=datetime.now(timezone.utc), nullable=False, index=True
     )
     status: Mapped[bool] = mapped_column(Boolean, nullable=False) 
     camera: Mapped[str] = mapped_column(String(255), nullable=False) 

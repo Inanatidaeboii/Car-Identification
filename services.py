@@ -35,7 +35,7 @@ def add_car_image(car_id: UUID, images: List[schemas.CarImageCreate], db: Sessio
     created_images = []
 
     for image in images:
-        mock_vector = [random.uniform(-1.0, 1.0) for _ in range(512)]
+        mock_vector = [random.uniform(-1.0, 1.0) for _ in range(768)]
         new_image = models.CarImage(
             image_url=image.image_path,
             vector=mock_vector,
@@ -100,7 +100,7 @@ def update_car_image(car_id: UUID, images: List[schemas.CarImageCreate], db: Ses
 
     updated_images = []
     for image in images:
-        mock_vector = [random.uniform(-1.0, 1.0) for _ in range(512)]
+        mock_vector = [random.uniform(-1.0, 1.0) for _ in range(768)]
         db_images.image_path = image.image_path
         db_images.embedding_vector = mock_vector
         db.commit()
