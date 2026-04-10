@@ -1,5 +1,5 @@
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import List, Optional
 
 from sqlalchemy import (
@@ -31,11 +31,11 @@ class RegisteredCar(Base):
     
     created_by: Mapped[Optional[str]] = mapped_column(String(255))
     created_date: Mapped[Optional[datetime]] = mapped_column(
-        DateTime(timezone=True), default=datetime.utcnow
+        DateTime(timezone=True), default=datetime.now(timezone.utc)
     )
     updated_by: Mapped[Optional[str]] = mapped_column(String(255))
     updated_date: Mapped[Optional[datetime]] = mapped_column(
-        DateTime(timezone=True), onupdate=datetime.utcnow
+        DateTime(timezone=True), onupdate=datetime.now(timezone.utc)
     )
     deleted_by: Mapped[Optional[str]] = mapped_column(String(255))
     deleted_date: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True))
